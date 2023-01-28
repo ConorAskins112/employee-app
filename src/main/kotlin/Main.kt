@@ -9,6 +9,7 @@ val payePercentage = 38.5
 val prsiPercentage = 5.2
 val annualBonus = 1450.50
 val cycleToWorkScheme = 54.33
+
 //payslip calculations
 var monthlySalary = grossSalary/12
 var monthPaye = monthlySalary*(payePercentage/100)
@@ -18,17 +19,14 @@ var bonus = annualBonus/12
 var gross= monthlySalary+ bonus
 var netPay = gross-totalDeductions
 
-//+ firstName.uppercase()+" "+ surname.uppercase()+"("+ gender.uppercase()+")"+
-fun main(args: Array<String>) {
 
+fun main(args: Array<String>) {
     println("Pay slip Printer")
    payslipLayout()
-
-
 }
 
 
-
+//prints the payslip menu with the finished values
 fun payslipLayout(){
     println("____________________________________________________________")
     println("|                   Monthly Payslip                        |")
@@ -51,7 +49,7 @@ fun payslipLayout(){
     println("|                    NET PAY:"+ rounding(netPay)+"                       |")
     println("|__________________________________________________________|")
 }
-
+//rounds values to the 2 decimal points
 fun rounding(num:Double): String {
     return "%.2f".format(num)
 }
