@@ -24,7 +24,7 @@ var gross= monthlySalary+ bonus
 var netPay = gross-totalDeductions
 
 
-fun main(args: Array<String>) {
+fun main() {
     println("Pay slip Printer")
    payslipLayout()
 }
@@ -34,26 +34,33 @@ fun main(args: Array<String>) {
  */
 
 fun payslipLayout(){
-    println("____________________________________________________________")
-    println("|                   Monthly Payslip                        |")
-    println("|                                                          |")
-    println("|__________________________________________________________|")
-    println("|                                                          |")
-    println("| Employee Name: ${firstName.uppercase()} ${surname.uppercase()}(${gender.uppercase()}            Employee ID:$employeeId   |")
-    println("|                                                          |")
-    println("|__________________________________________________________|")
-    println("|                                                          |")
-    println("|    PAYMENT DETAILS          DEDUCTION DETAILS            |")
-    println("|__________________________________________________________|")
-    println("|                                                          |")
-    println("|    Salary:${rounding(monthlySalary)}           PAYE:${rounding(monthPaye)}                 |")
-    println("|    bonus:${rounding(bonus)}             PRSI:${rounding(monthlyPrsi)}                  |")
-    println("|                             Cycle To Work:$cycleToWorkScheme          |")
-    println("|__________________________________________________________|")
-    println("|    Gross:${rounding(gross)}            Total Deductions:${rounding(totalDeductions)}     |")
-    println("|__________________________________________________________|")
-    println("|                    NET PAY:${rounding(netPay)}                       |")
-    println("|__________________________________________________________|")
+    println("""____________________________________________________________
+                                    Monthly Payslip                      
+               __________________________________________________________
+                                                             
+                Employee Name: ${firstName.uppercase()} ${surname.uppercase()}(${gender.uppercase()}            Employee ID:$employeeId  
+    
+                __________________________________________________________
+                                                              
+                                    PAYMENT DETAILS         
+                __________________________________________________________
+                                                              
+                            Salary:${rounding(monthlySalary)}                            
+                            bonus:${rounding(bonus)}                               
+                      --------------------------------------------
+                            Gross:${rounding(gross)}
+                __________________________________________________________
+                                DEDUCTION DETAILS
+                __________________________________________________________
+                                
+                            PAYE:${rounding(monthPaye)}
+                            PRSI:${rounding(monthlyPrsi)} 
+                            Cycle To Work:$cycleToWorkScheme
+                      ----------------------------------------
+                            Total Deductions:${rounding(totalDeductions)}                                                      
+                __________________________________________________________
+                        NET PAY:${rounding(netPay)}                       
+                __________________________________________________________""")
 }
 
 /**
