@@ -10,7 +10,11 @@ val prsiPercentage = 5.2
 val annualBonus = 1450.50
 val cycleToWorkScheme = 54.33
 
-//payslip calculations
+
+/**
+ * payslip calculations
+ */
+
 var monthlySalary = grossSalary/12
 var monthPaye = monthlySalary*(payePercentage/100)
 var monthlyPrsi = monthlySalary*(prsiPercentage/100)
@@ -25,30 +29,37 @@ fun main(args: Array<String>) {
    payslipLayout()
 }
 
+/**
+ * prints the payslip menu with the finished values
+ */
 
-//prints the payslip menu with the finished values
 fun payslipLayout(){
     println("____________________________________________________________")
     println("|                   Monthly Payslip                        |")
     println("|                                                          |")
     println("|__________________________________________________________|")
     println("|                                                          |")
-    println("| Employee Name: "+firstName.uppercase()+" "+ surname.uppercase()+"("+ gender.uppercase()+")"+"            Employee ID:$employeeId   |")
+    println("| Employee Name: ${firstName.uppercase()} ${surname.uppercase()}(${gender.uppercase()}            Employee ID:$employeeId   |")
     println("|                                                          |")
     println("|__________________________________________________________|")
     println("|                                                          |")
     println("|    PAYMENT DETAILS          DEDUCTION DETAILS            |")
     println("|__________________________________________________________|")
     println("|                                                          |")
-    println("|    Salary:"+ rounding(monthlySalary)+"           PAYE:"+ rounding(monthPaye)+"                 |")
-    println("|    bonus:"+ rounding(bonus)+"             PRSI:"+ rounding(monthlyPrsi)+"                  |")
+    println("|    Salary:${rounding(monthlySalary)}           PAYE:${rounding(monthPaye)}                 |")
+    println("|    bonus:${rounding(bonus)}             PRSI:${rounding(monthlyPrsi)}                  |")
     println("|                             Cycle To Work:$cycleToWorkScheme          |")
     println("|__________________________________________________________|")
-    println("|    Gross:"+ rounding(gross)+"            Total Deductions:"+ rounding(totalDeductions)+"     |")
+    println("|    Gross:${rounding(gross)}            Total Deductions:${rounding(totalDeductions)}     |")
     println("|__________________________________________________________|")
-    println("|                    NET PAY:"+ rounding(netPay)+"                       |")
+    println("|                    NET PAY:${rounding(netPay)}                       |")
     println("|__________________________________________________________|")
 }
+
+/**
+ * rounds values to the 2 decimal points
+ */
+
 //rounds values to the 2 decimal points
 fun rounding(num:Double): String {
     return "%.2f".format(num)
