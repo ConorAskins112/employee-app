@@ -19,11 +19,8 @@ val cycleToWorkScheme = 54.33
 fun main() {
     // Prints the title of the program
     println("Pay slip Printer")
-    // Calls the payslipLayout function with the inputs as arguments
-    println(
-        getpayslipLayout(gender, firstName, surname, grossSalary, annualBonus, employeeId, payePercentage, prsiPercentage,
+    menu(gender, firstName, surname, grossSalary, annualBonus, employeeId, payePercentage, prsiPercentage,
         cycleToWorkScheme)
-    )
 }
 
 /**
@@ -105,6 +102,53 @@ fun getNetMonthlyPay(gross:Double,deductions:Double): Double{
 fun rounding(num:Double): String {
     return "%.2f".format(num)
 }
+
+fun menuFormat(gender: Char,first: String,last: String) :Int {
+    print("""
+        Employee Menu for ${getFullname(gender,first,last)}
+        1. Monthly Salary
+        2. Monthly PRSI
+        3. Monthly PAYE
+        4. Monthly Gross Pay
+        5. Monthly Total Deductions
+        6. Monthly Net Pay
+        7. Full Payslip
+        -1. Exit
+        Enter Option :       
+    """)
+    return readLine()!!.toInt()
+}
+fun menu(gender:Char,first: String,surname:String,gross: Double,bonus: Double,employID: Int,paye:Double,prsi: Double,ctwScheme: Double){
+    val fullName= getFullname(gender,first,surname)
+    val monSalary= getMonthSalary(gross)
+    val monPAYE= getMonthlyPAYE(monSalary,paye)
+    val monPRSI= getMonthlyPRSI(monSalary,prsi)
+    val monBonus= getBonus(bonus)
+    val monGross= getGrossMonthlyPay(monSalary, monBonus)
+    val monDeductions = getTotalMonthlyDeductions(monPAYE,monPRSI,ctwScheme)
+    val monNet= getNetMonthlyPay(monGross,monDeductions)
+    var input:Int
+    do {
+        input = menuFormat(gender,first,surname)
+        when(input) {
+            1 -> println("Monthly Salary: ${rounding(monSalary)}")
+            2 -> println("Monthly PRSI: ${rounding(monPRSI)}")
+            3 ->println("Monthly PAYE: ${rounding(monPAYE)}")
+            4 -> println("Monthly Gross Pay: ${rounding(monGross)}")
+            5 -> println("Monthly Total Deductions: ${rounding(monDeductions)}")
+            6 -> println("Monthly Net Pay: ${rounding(monNet)}")
+            7 -> println(getpayslipLayout(gender,first,surname, gross,bonus,employID,paye,prsi,ctwScheme))
+            -1 -> println("Exiting App")
+            else -> println("Invalid Option")
+        }
+        println()
+    } while (input != -1)
+}
+
+
+
+
+
 /**
  * prints the payslip menu with the finished values
  */
