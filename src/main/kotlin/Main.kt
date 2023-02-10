@@ -20,8 +20,10 @@ fun main() {
     // Prints the title of the program
     println("Pay slip Printer")
     // Calls the payslipLayout function with the inputs as arguments
-    payslipLayout(gender, firstName, surname, grossSalary, annualBonus, employeeId, payePercentage, prsiPercentage,
+    println(
+        getpayslipLayout(gender, firstName, surname, grossSalary, annualBonus, employeeId, payePercentage, prsiPercentage,
         cycleToWorkScheme)
+    )
 }
 
 /**
@@ -107,7 +109,7 @@ fun rounding(num:Double): String {
  * prints the payslip menu with the finished values
  */
 
-fun payslipLayout(gender:Char,first: String,surname:String,gross: Double,bonus: Double,employID: Int,paye:Double,prsi: Double,ctwScheme: Double){
+fun getpayslipLayout(gender:Char,first: String,surname:String,gross: Double,bonus: Double,employID: Int,paye:Double,prsi: Double,ctwScheme: Double):String{
     val fullName= getFullname(gender,first,surname)
     val monSalary= getMonthSalary(gross)
     val monPAYE= getMonthlyPAYE(monSalary,paye)
@@ -117,7 +119,7 @@ fun payslipLayout(gender:Char,first: String,surname:String,gross: Double,bonus: 
     val monDeductions = getTotalMonthlyDeductions(monPAYE,monPRSI,ctwScheme)
     val monNet= getNetMonthlyPay(monGross,monDeductions)
 
-    println("""                __________________________________________________________
+    return """                __________________________________________________________
                                     Monthly Payslip                      
                 __________________________________________________________
                                                              
@@ -143,7 +145,7 @@ fun payslipLayout(gender:Char,first: String,surname:String,gross: Double,bonus: 
                             Total Deductions:${rounding(monDeductions)}                                                      
                 __________________________________________________________
                         NET PAY:${rounding(monNet)}                       
-                __________________________________________________________""")
+                __________________________________________________________"""
 }
 
 /**
