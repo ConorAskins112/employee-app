@@ -1,15 +1,8 @@
 package ie.setu.main.kt
 
 
-val firstName = "Joe"
-val surname = "Soap"
-val gender='m'
-val employeeId=6143
-val grossSalary= 67543.21
-val payePercentage = 38.5
-val prsiPercentage = 5.2
-val annualBonus = 1450.50
-val cycleToWorkScheme = 54.33
+var employee =  Employee("Joe", "Soap", 'm', 6143, 67543.21, 38.5, 5.2, 1450.50, 54.33)
+
 
 
 /**
@@ -19,8 +12,9 @@ val cycleToWorkScheme = 54.33
 fun main() {
     // Prints the title of the program
     println("Pay slip Printer")
-    menu(gender, firstName, surname, grossSalary, annualBonus, employeeId, payePercentage, prsiPercentage,
-        cycleToWorkScheme)
+    menu(
+        employee.gender, employee.firstName, employee.surname, employee.grossSalary, employee.annualBonus, employee.employeeId, employee.payePercentage, employee.prsiPercentage,
+        employee.cycleToWorkScheme)
 }
 
 /**
@@ -31,9 +25,9 @@ fun getFullname(sex:Char, first:String,last:String): String {
     // Returns the full name formatted differently based on the gender
     return when(sex){
         // If the gender is 'm', returns "Mr first last"
-        'm'->"Mr $first $last"
+        'm','M'->"Mr $first $last"
         // If the gender is 'f', returns "Ms first last"
-        'f'->"Ms $first $last"
+        'f','F'->"Ms $first $last"
         // If the gender is not 'm' or 'f', returns "first last"
         else -> "$first $last"
     }
@@ -119,7 +113,6 @@ fun menuFormat(gender: Char,first: String,last: String) :Int {
     return readLine()!!.toInt()
 }
 fun menu(gender:Char,first: String,surname:String,gross: Double,bonus: Double,employID: Int,paye:Double,prsi: Double,ctwScheme: Double){
-    val fullName= getFullname(gender,first,surname)
     val monSalary= getMonthSalary(gross)
     val monPAYE= getMonthlyPAYE(monSalary,paye)
     val monPRSI= getMonthlyPRSI(monSalary,prsi)
@@ -128,6 +121,9 @@ fun menu(gender:Char,first: String,surname:String,gross: Double,bonus: Double,em
     val monDeductions = getTotalMonthlyDeductions(monPAYE,monPRSI,ctwScheme)
     val monNet= getNetMonthlyPay(monGross,monDeductions)
     var input:Int
+
+    add()
+
     do {
         input = menuFormat(gender,first,surname)
         when(input) {
@@ -145,6 +141,28 @@ fun menu(gender:Char,first: String,surname:String,gross: Double,bonus: Double,em
     } while (input != -1)
 }
 
+fun add(){
+    print("Enter first name: ")
+    val firstName = readLine().toString()
+    print("Enter surname: ")
+    val surname = readLine().toString()
+    print("Enter gender (m/f): ")
+    val gender = readLine()!!.toCharArray()[0]
+    print("Enter employee ID: ")
+    val employeeID = readLine()!!.toInt()
+    print("Enter gross salary: ")
+    val grossSalary = readLine()!!.toDouble()
+    print("Enter PAYE %: ")
+    val payePercentage = readLine()!!.toDouble()
+    print("Enter PRSI %: ")
+    val prsiPercentage = readLine()!!.toDouble()
+    print("Enter Annual Bonus: ")
+    val annualBonus= readLine()!!.toDouble()
+    print("Enter Cycle to Work Deduction: ")
+    val cycleToWorkMonthlyDeduction= readLine()!!.toDouble()
+
+    employee = Employee(firstName, surname, gender, employeeID, grossSalary, payePercentage, prsiPercentage, annualBonus, cycleToWorkMonthlyDeduction)
+}
 
 
 
@@ -192,6 +210,3 @@ fun getpayslipLayout(gender:Char,first: String,surname:String,gross: Double,bonu
                 __________________________________________________________"""
 }
 
-/**
- * rounds values to the 2 decimal points
- */
