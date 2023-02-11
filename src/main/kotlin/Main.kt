@@ -1,7 +1,7 @@
 package ie.setu.main.kt
 
+var employees = EmployeeAPI()
 
-var employee =  Employee("Joe", "Soap", 'm', 6143, 67543.21, 38.5, 5.2, 1450.50, 54.33)
 
 
 
@@ -10,135 +10,63 @@ var employee =  Employee("Joe", "Soap", 'm', 6143, 67543.21, 38.5, 5.2, 1450.50,
  */
 
 fun main() {
-    // Prints the title of the program
-    println("Pay slip Printer")
-    menu(
-        employee.gender, employee.firstName, employee.surname, employee.grossSalary, employee.annualBonus, employee.employeeId, employee.payePercentage, employee.prsiPercentage,
-        employee.cycleToWorkScheme)
+   start()
 }
-
-/**
- * This function returns the full name of the employee based on their gender
- */
-
-fun getFullname(sex:Char, first:String,last:String): String {
-    // Returns the full name formatted differently based on the gender
-    return when(sex){
-        // If the gender is 'm', returns "Mr first last"
-        'm','M'->"Mr $first $last"
-        // If the gender is 'f', returns "Ms first last"
-        'f','F'->"Ms $first $last"
-        // If the gender is not 'm' or 'f', returns "first last"
-        else -> "$first $last"
-    }
-}
-/**
- *This function calculates the employee's monthly salary
- **/
-
-fun getMonthSalary(gross: Double): Double {
-    // Returns the gross salary divided by 12
-    return gross/12
-}
-
-/**
- * payslip calculations
- */
-
-/**
- *This function calculates the employee's monthly PRSI
- **/
-fun getMonthlyPRSI(monSalary:Double,prsi: Double): Double{
-    // Returns the monthly salary multiplied by the PRSI percentage
-    return monSalary*(prsi/100)
-}
-/**
- *This function calculates the employee's monthly PAYE
- **/
-fun getMonthlyPAYE(monSalary:Double,paye: Double): Double{
-    // Returns the monthly salary multiplied by the PAYE percentage
-    return monSalary*(paye/100)
-}
-/**
- *This function calculates the employee's monthly bonus
- **/
-
-fun getBonus(bonus: Double): Double{
-    // Returns the annual bonus divided by 12
-    return bonus/12
-}
-/**
- *This function calculates the employee's gross monthly pay
- **/
-fun getGrossMonthlyPay(monSalary:Double,bonus:Double): Double{
-    // Returns the sum of the monthly salary and bonus
-    return monSalary+bonus
-}
-/**
- *This function calculates the employee's total monthly deductions
- **/
-fun getTotalMonthlyDeductions(paye:Double,prsi:Double,ctwScheme:Double): Double{
-    // Returns the sum of the monthly PAYE, PRSI, and cycle-to-work scheme
-    return paye+prsi+ctwScheme
-}
-
-/**
- * This function calculates the employee's net monthly pay
- **/
-
-fun getNetMonthlyPay(gross:Double,deductions:Double): Double{
-    // Returns the difference between the gross monthly pay and total deductions
-    return gross-deductions
-}
-/**
- * rounds values to the 2 decimal points
- */
-fun rounding(num:Double): String {
-    return "%.2f".format(num)
-}
-
-fun menuFormat(gender: Char,first: String,last: String) :Int {
-    print("""
-        Employee Menu for ${getFullname(gender,first,last)}
-        1. Monthly Salary
-        2. Monthly PRSI
-        3. Monthly PAYE
-        4. Monthly Gross Pay
-        5. Monthly Total Deductions
-        6. Monthly Net Pay
-        7. Full Payslip
-        -1. Exit
-        Enter Option :       
-    """)
-    return readLine()!!.toInt()
-}
-fun menu(gender:Char,first: String,surname:String,gross: Double,bonus: Double,employID: Int,paye:Double,prsi: Double,ctwScheme: Double){
-    val monSalary= getMonthSalary(gross)
-    val monPAYE= getMonthlyPAYE(monSalary,paye)
-    val monPRSI= getMonthlyPRSI(monSalary,prsi)
-    val monBonus= getBonus(bonus)
-    val monGross= getGrossMonthlyPay(monSalary, monBonus)
-    val monDeductions = getTotalMonthlyDeductions(monPAYE,monPRSI,ctwScheme)
-    val monNet= getNetMonthlyPay(monGross,monDeductions)
-    var input:Int
-
-    add()
+fun start() {
+    var input: Int
 
     do {
-        input = menuFormat(gender,first,surname)
-        when(input) {
-            1 -> println("Monthly Salary: ${rounding(monSalary)}")
-            2 -> println("Monthly PRSI: ${rounding(monPRSI)}")
-            3 ->println("Monthly PAYE: ${rounding(monPAYE)}")
-            4 -> println("Monthly Gross Pay: ${rounding(monGross)}")
-            5 -> println("Monthly Total Deductions: ${rounding(monDeductions)}")
-            6 -> println("Monthly Net Pay: ${rounding(monNet)}")
-            7 -> println(getpayslipLayout(gender,first,surname, gross,bonus,employID,paye,prsi,ctwScheme))
+        input = menu()
+        when (input) {
+            1 -> add()
+            2 -> list()
+            3 -> search()
+            4 -> paySlip()
+            -99 -> dummyData()
             -1 -> println("Exiting App")
             else -> println("Invalid Option")
         }
         println()
     } while (input != -1)
+}
+fun list(){
+    employees.findAll()
+        .forEach{ println(it) }
+}
+
+internal fun getEmployeeById(): Employee? {
+    print("Enter the employee id to search by: ")
+    val employeeID = readLine()!!.toInt()
+    return employees.findOne(employeeID)
+}
+fun search() {
+    val employee = getEmployeeById()
+    if (employee == null)
+        println("No employee found")
+    else
+        println(employee)
+}
+fun paySlip(){
+    val employee = getEmployeeById()
+    if (employee != null)
+        println(employee.getpayslipLayout())
+}
+fun dummyData() {
+    employees.create(Employee("Joe", "Soap", 'm', 0, 35655.43, 31.0, 7.5, 2000.0, 25.6))
+    employees.create(Employee("Joan", "Murphy", 'f', 0, 54255.13, 32.5, 7.0, 1500.0, 55.3))
+    employees.create(Employee("Mary", "Quinn", 'f', 0, 75685.41, 40.0, 8.5, 4500.0, 0.0))
+}
+fun menu():Int{
+    print(""" 
+         |Employee Menu
+         |   1. Add Employee
+         |   2. List All Employees
+         |   3. Search Employees 
+         |   4. Print Payslip for Employee
+         |  -1. Exit
+         |       
+         |Enter Option : """.trimMargin())
+    return readLine()!!.toInt()
 }
 
 fun add(){
@@ -148,8 +76,6 @@ fun add(){
     val surname = readLine().toString()
     print("Enter gender (m/f): ")
     val gender = readLine()!!.toCharArray()[0]
-    print("Enter employee ID: ")
-    val employeeID = readLine()!!.toInt()
     print("Enter gross salary: ")
     val grossSalary = readLine()!!.toDouble()
     print("Enter PAYE %: ")
@@ -161,52 +87,5 @@ fun add(){
     print("Enter Cycle to Work Deduction: ")
     val cycleToWorkMonthlyDeduction= readLine()!!.toDouble()
 
-    employee = Employee(firstName, surname, gender, employeeID, grossSalary, payePercentage, prsiPercentage, annualBonus, cycleToWorkMonthlyDeduction)
+    employees.create(Employee(firstName, surname, gender, 0, grossSalary, payePercentage, prsiPercentage, annualBonus, cycleToWorkMonthlyDeduction))
 }
-
-
-
-
-/**
- * prints the payslip menu with the finished values
- */
-
-fun getpayslipLayout(gender:Char,first: String,surname:String,gross: Double,bonus: Double,employID: Int,paye:Double,prsi: Double,ctwScheme: Double):String{
-    val fullName= getFullname(gender,first,surname)
-    val monSalary= getMonthSalary(gross)
-    val monPAYE= getMonthlyPAYE(monSalary,paye)
-    val monPRSI= getMonthlyPRSI(monSalary,prsi)
-    val monBonus= getBonus(bonus)
-    val monGross= getGrossMonthlyPay(monSalary, monBonus)
-    val monDeductions = getTotalMonthlyDeductions(monPAYE,monPRSI,ctwScheme)
-    val monNet= getNetMonthlyPay(monGross,monDeductions)
-
-    return """                __________________________________________________________
-                                    Monthly Payslip                      
-                __________________________________________________________
-                                                             
-                Employee Name: $fullName(${gender.uppercase()})            Employee ID:$employID  
-    
-                __________________________________________________________
-                                                              
-                                    PAYMENT DETAILS         
-                __________________________________________________________
-                                                              
-                            Salary:${rounding(getMonthSalary(gross))}                            
-                            bonus:${rounding(getBonus(bonus))}                               
-                      --------------------------------------------
-                            Gross:${rounding(monGross)}
-                __________________________________________________________
-                                DEDUCTION DETAILS
-                __________________________________________________________
-                                
-                            PAYE:${rounding(monPAYE)}
-                            PRSI:${rounding(monPRSI)} 
-                            Cycle To Work:$ctwScheme
-                      ----------------------------------------
-                            Total Deductions:${rounding(monDeductions)}                                                      
-                __________________________________________________________
-                        NET PAY:${rounding(monNet)}                       
-                __________________________________________________________"""
-}
-
