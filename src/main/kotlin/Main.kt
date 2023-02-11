@@ -29,6 +29,7 @@ fun start() {
             3 -> search()
             4 -> paySlip()
             5-> delete()
+            6-> update()
             -99 -> dummyData()
             -1 -> println("Exiting App")
             else -> println("Invalid Option")
@@ -42,7 +43,7 @@ fun list(){
 }
 
 internal fun getEmployeeById(): Employee? {
-    print("Enter the employee id to search by: ")
+    print("Enter the employee id: ")
     val employeeID = readLine()!!.toInt()
     return employees.findOne(employeeID)
 }
@@ -58,9 +59,96 @@ fun delete(){
 
     if (employee != null) {
         employees.delete(employee)
+        println("")
     }
     else
         println("No employee found")
+
+}
+fun update(){
+    val employee = getEmployeeById()
+    var employId = employee!!.getemployeeId()
+    var fName= employee!!.getfirstName()
+    var lName = employee!!.getsurname()
+    var gender = employee!!.getgender()
+    var grossSalary = employee!!.getgrossSalary()
+    var bonus=employee!!.getannualBonus()
+    var paye=employee!!.getpayePercentage()
+    var prsi= employee!!.getprsiPercentage()
+    var ctws= employee!!.getcycleToWorkScheme()
+
+    println(employee)
+        println("What value would your like to edit")
+        print("""
+        |Employee Menu
+         |   1. First Name
+         |   2. Last Name
+         |   3. Gender
+         |   4. Gross Salary
+         |   5. Annual Bonus
+         |   6. PAYE Percentage
+         |   7. PRSI Percentage
+         |   8. Cycle To Work Scheme
+         |  -1. Finish Update
+         |       
+         |Enter Option :        
+    """.trimMargin())
+
+        val input = readLine()!!.toInt()
+        do {
+            when(input){
+                1->{
+                    println("Enter The new First Name:")
+                    fName= readLine().toString()
+                    break
+                }
+
+                2->{
+                    println("Enter The new Last Name:")
+                    lName= readLine().toString()
+                    break
+                }
+                3->{
+                    println("Enter The Gender:")
+                    gender= readLine()!!.toCharArray()[0]
+                    break
+                }
+                4->{
+                    println("Enter the new gross salary")
+                    grossSalary= readLine()!!.toDouble()
+                    break
+                }
+                5-> {
+                    println("Enter the new gross salary")
+                    bonus= readLine()!!.toDouble()
+                    break
+                }
+                6-> {
+                println("Enter the new gross salary")
+                paye= readLine()!!.toDouble()
+                break
+                }
+                7-> {
+                println("Enter the new gross salary")
+                prsi= readLine()!!.toDouble()
+                break
+                }
+                8->{
+                println("Enter the new gross salary")
+                    ctws= readLine()!!.toDouble()
+                break
+                }
+                -1->
+                    println("Update Finished")
+                else-> println("Invalid Option")
+            }
+        }while(input!=-1)
+
+    if (employee != null) {
+        employees.delete(employee)
+        employees.create(Employee(fName,lName,gender,employId,grossSalary,paye,prsi,bonus,ctws))
+        employees.findOne(employId)
+    }
 
 
 }
@@ -69,6 +157,8 @@ fun paySlip(){
     if (employee != null)
         println(employee.getpayslipLayout())
 }
+
+
 fun dummyData() {
     employees.create(Employee("Joe", "Soap", 'm', 0, 35655.43, 31.0, 7.5, 2000.0, 25.6))
     employees.create(Employee("Joan", "Murphy", 'f', 0, 54255.13, 32.5, 7.0, 1500.0, 55.3))
@@ -82,6 +172,8 @@ fun menu():Int{
          |   3. Search Employees 
          |   4. Print Payslip for Employee
          |   5. Delete an Employee
+         |   6. Update an Employee
+         |   99. Dummy Data
          |  -1. Exit
          |       
          |Enter Option : """.trimMargin())

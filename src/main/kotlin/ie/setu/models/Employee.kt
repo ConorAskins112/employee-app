@@ -3,6 +3,34 @@ package ie.setu.main.kt.ie.setu.models
 
 class Employee(var firstName:String, var surname:String,var gender:Char,var employeeId:Int,var grossSalary:Double,var payePercentage:Double,var  prsiPercentage:Double,var annualBonus:Double,var cycleToWorkScheme:Double) {
 
+    fun getfirstName():String{
+        return firstName
+    }
+    fun getsurname():String{
+        return surname
+    }
+    fun getgender():Char{
+        return gender
+    }
+    fun getemployeeId():Int{
+        return employeeId
+    }
+    fun getgrossSalary():Double{
+        return grossSalary
+    }
+    fun getpayePercentage():Double{
+        return payePercentage
+    }
+    fun getprsiPercentage():Double{
+        return prsiPercentage
+    }
+    fun getannualBonus() : Double {
+        return annualBonus
+    }
+    fun getcycleToWorkScheme():Double{
+        return cycleToWorkScheme
+    }
+
     /**
      * This function returns the full name of the employee based on their gender
      */
@@ -66,11 +94,6 @@ class Employee(var firstName:String, var surname:String,var gender:Char,var empl
         return rounding(getGrossMonthlyPay() - getTotalMonthlyDeductions())
     }
 
-
-
-
-
-
     /**
      * rounds values to the 2 decimal points
      */
@@ -109,6 +132,7 @@ class Employee(var firstName:String, var surname:String,var gender:Char,var empl
                         NET PAY:${getNetMonthlyPay()}                       
                 __________________________________________________________"""
     }
+
 
     override fun toString(): String {
         return "Employee(firstName='$firstName', surname='$surname', gender=$gender, employeeID=$employeeId, grossSalary=$grossSalary, payePercentage=$payePercentage, prsiPercentage=$prsiPercentage, annualBonus=$annualBonus, cycleToWorkScheme=$cycleToWorkScheme)"
