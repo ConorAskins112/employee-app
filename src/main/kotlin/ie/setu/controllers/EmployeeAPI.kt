@@ -1,5 +1,6 @@
-package ie.setu.main.kt
+package ie.setu.main.kt.ie.setu.controllers
 
+import ie.setu.main.kt.ie.setu.models.Employee
 
 
 var lastId = 0
@@ -24,6 +25,10 @@ class EmployeeAPI {
     fun create(employee: Employee) {
         employee.employeeId = getId()
         employees.add(employee)
+    }
+    fun delete(employee:Employee){
+        employee.employeeId = getId()
+        employees.remove(employee)
     }
 
 }

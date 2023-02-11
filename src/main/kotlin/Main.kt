@@ -1,7 +1,11 @@
 package ie.setu.main.kt
 
-var employees = EmployeeAPI()
+import ie.setu.main.kt.ie.setu.controllers.EmployeeAPI
+import ie.setu.main.kt.ie.setu.models.Employee
+import mu.KotlinLogging
 
+var employees = EmployeeAPI()
+val logger = KotlinLogging.logger {}
 
 
 
@@ -10,7 +14,9 @@ var employees = EmployeeAPI()
  */
 
 fun main() {
-   start()
+    logger.info { "Launching Employee App" }
+
+    start()
 }
 fun start() {
     var input: Int
@@ -22,6 +28,7 @@ fun start() {
             2 -> list()
             3 -> search()
             4 -> paySlip()
+            5-> delete()
             -99 -> dummyData()
             -1 -> println("Exiting App")
             else -> println("Invalid Option")
@@ -46,6 +53,17 @@ fun search() {
     else
         println(employee)
 }
+fun delete(){
+    val employee = getEmployeeById()
+
+    if (employee != null) {
+        employees.delete(employee)
+    }
+    else
+        println("No employee found")
+
+
+}
 fun paySlip(){
     val employee = getEmployeeById()
     if (employee != null)
@@ -63,6 +81,7 @@ fun menu():Int{
          |   2. List All Employees
          |   3. Search Employees 
          |   4. Print Payslip for Employee
+         |   5. Delete an Employee
          |  -1. Exit
          |       
          |Enter Option : """.trimMargin())

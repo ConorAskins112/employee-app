@@ -1,4 +1,4 @@
-package ie.setu.main.kt
+package ie.setu.main.kt.ie.setu.models
 
 
 class Employee(var firstName:String, var surname:String,var gender:Char,var employeeId:Int,var grossSalary:Double,var payePercentage:Double,var  prsiPercentage:Double,var annualBonus:Double,var cycleToWorkScheme:Double) {
