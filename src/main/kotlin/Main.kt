@@ -68,14 +68,14 @@ fun delete(){
 fun update(){
     val employee = getEmployeeById()
     var employId = employee!!.getemployeeId()
-    var fName= employee!!.getfirstName()
-    var lName = employee!!.getsurname()
-    var gender = employee!!.getgender()
-    var grossSalary = employee!!.getgrossSalary()
-    var bonus=employee!!.getannualBonus()
-    var paye=employee!!.getpayePercentage()
-    var prsi= employee!!.getprsiPercentage()
-    var ctws= employee!!.getcycleToWorkScheme()
+    var fName= employee.getfirstName()
+    var lName = employee.getsurname()
+    var gender = employee.getgender()
+    var grossSalary = employee.getgrossSalary()
+    var bonus= employee.getannualBonus()
+    var paye= employee.getpayePercentage()
+    var prsi= employee.getprsiPercentage()
+    var ctws= employee.getcycleToWorkScheme()
 
     println(employee)
         println("What value would your like to edit")
@@ -145,12 +145,8 @@ fun update(){
         }while(input!=-1)
 
     if (employee != null) {
-        employees.delete(employee)
-        employees.create(Employee(fName,lName,gender,employId,grossSalary,paye,prsi,bonus,ctws))
-        employees.findOne(employId)
+        employees.update(Employee(fName,lName,gender,employId,grossSalary,paye,prsi,bonus,ctws))
     }
-
-
 }
 fun paySlip(){
     val employee = getEmployeeById()
@@ -173,7 +169,7 @@ fun menu():Int{
          |   4. Print Payslip for Employee
          |   5. Delete an Employee
          |   6. Update an Employee
-         |   99. Dummy Data
+         |   -99. Dummy Data
          |  -1. Exit
          |       
          |Enter Option : """.trimMargin())

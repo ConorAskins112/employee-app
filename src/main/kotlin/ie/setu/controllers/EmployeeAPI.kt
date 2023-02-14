@@ -31,6 +31,11 @@ class EmployeeAPI {
         employees.remove(employee)
     }
 
+    fun update(employee:Employee){
+        var id = employee.employeeId
+        employees.set(id,employee)
+    }
+
 
 
 }
